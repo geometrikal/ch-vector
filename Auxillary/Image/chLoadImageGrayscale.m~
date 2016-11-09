@@ -1,0 +1,6 @@
+function [ I ] = chLoadImageGrayscale( filename )
+%CHLOADIMAGEGRAYSCALE - Load image, convert to grayscale and d
+
+
+end
+
