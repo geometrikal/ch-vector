@@ -34,7 +34,7 @@ end
 
 % Shape to correct dimension
 n = (-N:N);
-shape = ones(1,dimension);
+shape = ones(1,4);
 shape(dimension) = numel(n);
 n = reshape(n,shape);
 
