@@ -4,7 +4,7 @@ function [ axi ] = figResize( width, height, pad, subpad, fontsize, mm )
 
 % Padding incase we need extra space around the figure
 if nargin < 3
-    padding = [10,10,10,10];
+    padding = [20,40,20,20];
 elseif numel(pad) == 1
     padding = [pad,pad,pad,pad];
 else

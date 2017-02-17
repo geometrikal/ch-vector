@@ -6,7 +6,7 @@ function [ weights ] = chWeightsSinusoid( N, width, mode )
 %
 % N         Maximum CH order to use
 % width     Width in either radians (mode = 0) or normalised to N (mode = 1*)
-%           For normalised (mode = 1) the following values result in:
+%           For normalised (mode = 1) the following widths result in:
 %           0 - each odd order (and each order) are weighted the same. the
 %           angular respons has larger lobes
 %           1 - the higher orders are weighted less, resulting in smaller

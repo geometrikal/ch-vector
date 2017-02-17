@@ -210,9 +210,12 @@ for k = 1:K
             orient(:,:,k) = rtValue3rdDim(or,idx);
             
         % Only solve for positive amplitudes?
-        elseif strcmpi(options.positive || M == 1)
-            
+        elseif options.positive || M == 1            
             [val, orient(:,:,k)] = chPolyMaxPositiveRoots(p, deltaP, lambdaP);
+            
+        % Solve special case using quadratic (fast)
+        elseif options.polyType == 2 && M == 2
+            [val, orient(:,:,k)] = chPolyQuadRoots(p);
         
         % Solve as normal
         else            
@@ -223,7 +226,7 @@ for k = 1:K
         
     % Solve using iterative method?
     elseif strcmpi(options.method,'iterative')
-        tstart = tic;
+        tstart = tic;        
         [val, orient(:,:,k)] = chPolyMaxIterative(p,options.params(1));
         timing(2) = toc(tstart);
         

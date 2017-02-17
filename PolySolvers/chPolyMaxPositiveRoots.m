@@ -1,4 +1,4 @@
-function [ value, theta ] = rtPolyMaxPositiveRoots( beta, delta, lambda )
+function [ value, theta ] = chPolyMaxPositiveRoots( beta, delta, lambda )
 
 % Size of 2D image RT vector matrix
 [r,c,N2] = size(beta);

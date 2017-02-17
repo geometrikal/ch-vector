@@ -2,7 +2,7 @@ function [ r ] = chOpConv3rdDim( a, b )
 %CHOPCONVDIM - convolve along 3rd dimension
 
 if numel(which('inplaceprod')) == 0
-    error(['Please run convnfft_install.m from within the External/convnfft directory' ...
+    error(['Please run convnfft_install.m from within the Auxillary/External/convnfft directory' ...
            ', or change alg = 1 to alg = 0 in chOpConvDim.m']);
 end
 

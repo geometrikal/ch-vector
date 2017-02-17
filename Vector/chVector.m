@@ -43,7 +43,7 @@ expPassband = {'band','high','low'};
 addOptional(p,'Passband', 'band', @(x) any(validatestring(lower(x),expPassband)));
 addOptional(p,'Squared', 0, @isscalar);
 p.parse(I,N,filterType,filterParams,varargin{:})
-argin = p.Results
+argin = p.Results;
 
 % Ensure image is double type and single channel
 I = double(I(:,:,1));
