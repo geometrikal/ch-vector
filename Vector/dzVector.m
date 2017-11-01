@@ -1,15 +1,29 @@
 function [ f, A, theta ] = dzVector( I, N, filterType, filterParams, varargin )
-%DZVECTOR - Wirtinger vector of image
+%CHVECTOR - DZ vector of image
 %
-% See chVector for inputs/outputs. The only difference is that instead of a
-% Riesz transform operator, the Wirtiniger operator is used.
+% Inputs:
 %
-% The Wirtinger operator is essentially a complex-valued derivative of both
-% axes. The Riesz transform operator is its frequency-normalised form. Thus
-% instead of increasing in spatial extent with higher orders as with the
-% Riesz transform, using the Wirtinger operator the spatial extent of the
-% wavelets stay the same and instead the frequency band increases. Note,
-% that this means tight wavelet frames are not usually possible.
+% I             Image
+% N             Maximum circular harmonic order
+% filterType    filter type       - see chFilterSpectrum
+% filterParams  filter parameters - see chFilterSpectrum
+%
+% Optional inputs:
+%
+% Squared       0* - nothing, 1 - square the filter freq. response
+% Passband      band*, low, high
+%
+% Outputs:
+% 
+% f             CH vector matrix
+%               f(:,:,1)     : -Nth order
+%               f(:,:,N+1)   :  0th order
+%               f(:,:,2*N+1) :  Nth order
+%
+% A             Amplitude of polar form of each order - abs(f(:,:,n))
+% theta         Orientation of polar form of each order - angle(f(:,:,n))
+%
+% Example use:  [f, A, theta] = chVector(I,9,'lognormal',[32,0.65])
 %
 %
 % Written by:
@@ -28,14 +42,14 @@ addRequired(p,'filterParams');
 expPassband = {'band','high','low'};
 addOptional(p,'Passband', 'band', @(x) any(validatestring(lower(x),expPassband)));
 addOptional(p,'Squared', 0, @isscalar);
-p.parse(I,N,filterType,filterParCHams,varargin{:})
-argin = p.Results
+p.parse(I,N,filterType,filterParams,varargin{:})
+argin = p.Results;
 
 % Ensure image is double type and single channel
 I = double(I(:,:,1));
 
 % Create FFT mesh
-[ux,uy,r,th] = rtFFTMesh(size(I));
+[ux,uy,r,th] = chFFTMesh(size(I));
 
 % FFT of image
 Ifft = fft2(I);
@@ -60,12 +74,12 @@ Ifft = Ifft .* filterFFT;
 RT = (ux + 1i*uy);
 RT(1,1) = 0;
 
-% 0th order of vector
+% 0th order of CH vector
 f(:,:,N+1) = real(ifft2(Ifft));
 A(:,:,N+1) = f(:,:,N+1);
 theta(:,:,N+1) = zeros(size(f(:,:,N+1)));
 
-% Remaining orders of vector
+% Remaining orders of CH vector
 RTN = RT;
 for j = 1:N
     % Complex form

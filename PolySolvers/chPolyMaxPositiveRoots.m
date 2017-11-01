@@ -31,10 +31,10 @@ val = zeros(r,c,2*N);
 d = ones(r,c,2*N);
 g = ones(r,c,2*N);
 for j = 1:2*N
-    val(:,:,j) = rtPolyValue(beta,theta(:,:,j));
+    val(:,:,j) = chPolyValue(beta,theta(:,:,j));
     for k = 1:size(delta,4)
-        d(:,:,j) = d(:,:,j) & (rtPolyValue(delta(:,:,:,k),theta(:,:,j)) >= 0);
-        g(:,:,j) = g(:,:,j) & (rtPolyValue(lambda(:,:,:,k),theta(:,:,j)) >= 0);
+        d(:,:,j) = d(:,:,j) & (chPolyValue(delta(:,:,:,k),theta(:,:,j)) >= 0);
+        g(:,:,j) = g(:,:,j) & (chPolyValue(lambda(:,:,:,k),theta(:,:,j)) >= 0);
     end
     %imagesc(d(:,:,j)); pause;
     %imagesc(g(:,:,j)); pause;
@@ -45,7 +45,7 @@ val(d == 0) = -inf;
 [value, idx] = max(val,[],3);
 
 % Find theta at maximum
-theta = rtValue3rdDim(theta,idx);
+theta = chOpValue3rdDim(theta,idx);
 
 end
 
